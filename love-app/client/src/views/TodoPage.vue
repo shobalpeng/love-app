@@ -19,7 +19,8 @@
       <button :class="{ active: filter === 'shared' }" @click="filter = 'shared'">共享</button>
     </div>
 
-    <div v-if="todos.length === 0">
+    <BaseSkeleton v-if="initialLoad && todos.length === 0" :count="5" />
+    <div v-else-if="todos.length === 0">
       <BaseEmpty text="暂无待办" />
     </div>
 
@@ -46,6 +47,7 @@ import { createTodo, getTodoList, updateTodo, deleteTodo } from '../api/todos'
 import { useCache } from '../composables/useCache'
 import BaseButton from '../components/BaseButton.vue'
 import BaseEmpty from '../components/BaseEmpty.vue'
+import BaseSkeleton from '../components/BaseSkeleton.vue'
 import StatusBadge from '../components/StatusBadge.vue'
 
 const filter = ref('all')
@@ -54,6 +56,7 @@ const todos = ref(todosCache.data.value ?? [])
 const newTitle = ref('')
 const newVisibility = ref('private')
 const creating = ref(false)
+const initialLoad = ref(true)
 const titleInput = ref(null)
 
 function autoResize() {
@@ -74,6 +77,7 @@ async function fetchTodos() {
       try { localStorage.setItem(todosCache.cacheKey, JSON.stringify(todos.value)) } catch { /* */ }
     }
   } catch { todos.value = [] }
+  finally { initialLoad.value = false }
 }
 
 watch(filter, fetchTodos)

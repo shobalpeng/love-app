@@ -28,6 +28,7 @@ defineEmits(['click'])
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-height: 44px;
   padding: 11px 26px;
   border: none;
   border-radius: var(--radius-sm);
@@ -38,6 +39,7 @@ defineEmits(['click'])
   transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 .base-btn::after {
@@ -53,7 +55,7 @@ defineEmits(['click'])
 }
 
 .base-btn:active:not(.disabled):not(.loading) {
-  transform: scale(0.97);
+  transform: scale(0.97) !important;
 }
 
 /* ─── Primary ─── */
@@ -99,7 +101,7 @@ defineEmits(['click'])
 }
 
 .base-btn.block { width: 100%; }
-.base-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+.base-btn.disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 
 /* ─── Loading Spinner ─── */
 .spinner {

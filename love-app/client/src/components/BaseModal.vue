@@ -15,11 +15,21 @@
 </template>
 
 <script setup>
-defineProps({
+import { watch, onUnmounted } from 'vue'
+
+const props = defineProps({
   visible: { type: Boolean, default: false },
   title: { type: String, default: '' }
 })
 defineEmits(['close'])
+
+watch(() => props.visible, (val) => {
+  document.body.style.overflow = val ? 'hidden' : ''
+})
+
+onUnmounted(() => {
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>

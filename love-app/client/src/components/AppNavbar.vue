@@ -65,13 +65,15 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  height: 56px;
+  padding: 0 20px;
+  height: 48px;
+  margin: 10px 16px;
+  border-radius: 24px;
   background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border-light);
-  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--color-border-light);
+  box-shadow: var(--shadow-lg);
   position: sticky;
-  top: 0;
+  top: 10px;
   z-index: 100;
 }
 
@@ -132,22 +134,23 @@ onMounted(async () => {
   60%      { transform: rotate(0); }
 }
 
-/* ─── Mobile Bottom Bar ─── */
+/* ─── Mobile ─── */
 @media (max-width: 640px) {
   .nav-center { display: none; }
-  .navbar { padding: 0 16px; }
+  .navbar { margin: 8px 10px; padding: 0 16px; height: 44px; border-radius: 22px; top: 8px; }
 }
 
 .bottom-bar {
   display: none;
   position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 62px;
+  bottom: 10px; left: 12px; right: 12px;
+  height: 58px;
+  border-radius: 29px;
   background: var(--color-surface);
-  border-top: 1px solid var(--color-border-light);
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.04);
+  border: 1.5px solid var(--color-border-light);
+  box-shadow: var(--shadow-lg);
   z-index: 100;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .tab-item {

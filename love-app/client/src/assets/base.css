@@ -64,6 +64,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   scroll-behavior: smooth;
+  touch-action: manipulation;
 }
 
 ::selection {
@@ -91,6 +92,17 @@ input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Interactive elements should show pointer */
+a, button, [role="button"], input[type="submit"], input[type="reset"] {
+  cursor: pointer;
 }
 
 h1, h2, h3, h4 {

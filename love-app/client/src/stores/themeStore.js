@@ -19,5 +19,8 @@ export const useThemeStore = defineStore('theme', () => {
     })
   }
 
+  // 初始化时应用主题
+  applyTheme(current.value)
+
   return { current, setTheme, applyTheme }
 })

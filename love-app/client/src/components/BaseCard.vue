@@ -13,9 +13,11 @@
 .base-card {
   background: var(--color-surface);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    var(--shadow);
   overflow: hidden;
-  border: 1px solid var(--color-border-light);
+  border: 1.5px solid var(--color-border-light);
   transition: box-shadow var(--transition), transform var(--transition);
 }
 .card-header {

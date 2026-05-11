@@ -24,7 +24,8 @@
       </select>
     </div>
 
-    <div v-if="tasks.length === 0">
+    <BaseSkeleton v-if="initialLoad && tasks.length === 0" :count="5" />
+    <div v-else-if="tasks.length === 0">
       <BaseEmpty text="暂无任务" />
     </div>
 
@@ -69,6 +70,7 @@ import { getTaskList } from '../../api/tasks'
 import { useCache } from '../../composables/useCache'
 import BaseButton from '../../components/BaseButton.vue'
 import BaseEmpty from '../../components/BaseEmpty.vue'
+import BaseSkeleton from '../../components/BaseSkeleton.vue'
 import StatusBadge from '../../components/StatusBadge.vue'
 
 const filter = ref('all')
@@ -79,6 +81,7 @@ const tasks = ref(tasksCache.data.value?.records ?? [])
 const total = ref(tasksCache.data.value?.total ?? 0)
 const page = ref(1)
 const loading = ref(false)
+const initialLoad = ref(true)
 
 let searchTimer = null
 function debounceSearch() {
@@ -106,7 +109,7 @@ async function fetchTasks(reset = true) {
       try { localStorage.setItem(tasksCache.cacheKey, JSON.stringify(data)) } catch { /* */ }
     }
   } catch { /* ignore */ }
-  finally { loading.value = false }
+  finally { loading.value = false; initialLoad.value = false }
 }
 
 function loadMore() { fetchTasks(false) }

@@ -53,6 +53,7 @@ const themes = themeRegistry
 .theme-item.active { border-color: var(--color-primary); background: var(--color-primary-bg); }
 .theme-preview { display: flex; align-items: center; gap: 14px; }
 .swatch { width: 32px; height: 32px; border-radius: 50%; box-shadow: var(--shadow-sm); }
+.swatch-clay { background: linear-gradient(135deg, #e11d48, #fb7185); }
 .swatch-warm { background: linear-gradient(135deg, #e8546b, #f2797e); }
 .swatch-minimal { background: linear-gradient(135deg, #5b5fef, #7c7ff5); }
 .swatch-handdrawn { background: linear-gradient(135deg, #6daa6d, #8bc08b); }

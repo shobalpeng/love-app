@@ -29,7 +29,7 @@ JWT_SECRET=请修改为随机字符串
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
 
-# 上传路径
+# 上传路径（主机目录，用于存放用户上传的图片，可改为绝对路径如 /mnt/data/uploads）
 UPLOAD_PATH=./uploads
 ```
 
@@ -56,7 +56,7 @@ docker compose up -d
 - **前端**：Vue 3 静态文件 + Nginx 反向代理 `/api/` 到后端
 - **后端**：Node.js + Express，端口 3000
 - **数据库**：PostgreSQL 16，数据持久化在 Docker Volume `pg_data`
-- **上传文件**：持久化在 Docker Volume `uploads`
+- **上传文件**：持久化在主机目录（`.env` 中 `UPLOAD_PATH` 指定）
 
 ---
 
@@ -83,8 +83,8 @@ docker compose exec database pg_dump -U love_user love_app > backup.sql
 # 恢复数据库
 docker compose exec -T database psql -U love_user love_app < backup.sql
 
-# 备份上传文件
-docker compose cp server:/app/uploads ./uploads_backup
+# 备份上传文件（直接复制主机目录）
+cp -r ./uploads ./uploads_backup
 ```
 
 ---
@@ -143,6 +143,7 @@ docker compose up -d --build
 | DB_USER | 数据库用户 | love_user |
 | DB_PASSWORD | 数据库密码 | **必须修改** |
 | JWT_SECRET | JWT 签名密钥 | **必须修改** |
+| UPLOAD_PATH | 上传文件主机目录 | ./uploads |
 | ADMIN_USERNAME | 管理员用户名 | 不设则不创建 |
 | ADMIN_PASSWORD | 管理员密码 | 不设则不创建 |
 

@@ -6,6 +6,17 @@ const db = require('../config/db');
 router.use(auth);
 router.use(adminAuth);
 
+// 不可手动设置的列
+const AUTO_COLS = new Set(['id', 'created_at', 'updated_at', 'bound_at', 'unbound_at', 'frozen_at', 'verified_at', 'confirmed_at', 'submitted_at', 'reviewed_at', 'password_hash']);
+
+function cleanBody(body) {
+  const cleaned = {};
+  for (const [k, v] of Object.entries(body)) {
+    if (!AUTO_COLS.has(k) && v !== undefined) cleaned[k] = v;
+  }
+  return cleaned;
+}
+
 // 通用 CRUD 辅助
 function crud(table) {
   router.get(`/${table}`, async (req, res, next) => {
@@ -24,6 +35,31 @@ function crud(table) {
   router.get(`/${table}/:id`, async (req, res, next) => {
     try {
       const row = await db(table).where({ id: req.params.id }).first();
+      if (!row) return res.status(404).json({ error: '不存在' });
+      res.json(row);
+    } catch (err) { next(err); }
+  });
+
+  router.post(`/${table}`, async (req, res, next) => {
+    try {
+      const data = cleanBody(req.body);
+      if (table === 'users' && data.password) {
+        data.password_hash = require('bcrypt').hashSync(data.password, 10);
+        delete data.password;
+      }
+      const [row] = await db(table).insert(data).returning('*');
+      res.status(201).json(row);
+    } catch (err) { next(err); }
+  });
+
+  router.put(`/${table}/:id`, async (req, res, next) => {
+    try {
+      const data = cleanBody(req.body);
+      if (table === 'users' && data.password) {
+        data.password_hash = require('bcrypt').hashSync(data.password, 10);
+        delete data.password;
+      }
+      const [row] = await db(table).where({ id: req.params.id }).update(data).returning('*');
       if (!row) return res.status(404).json({ error: '不存在' });
       res.json(row);
     } catch (err) { next(err); }

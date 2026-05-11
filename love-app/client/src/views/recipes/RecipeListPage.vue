@@ -11,7 +11,8 @@
       <input v-model="category" type="text" class="input" placeholder="分类筛选..." @input="refresh" style="max-width:160px" />
     </div>
 
-    <div v-if="recipes.length === 0">
+    <BaseSkeleton v-if="initialLoad && recipes.length === 0" :count="5" />
+    <div v-else-if="recipes.length === 0">
       <BaseEmpty text="暂无菜谱" />
     </div>
 
@@ -44,6 +45,7 @@ import { getRecipeList } from '../../api/recipes'
 import { useCache } from '../../composables/useCache'
 import BaseButton from '../../components/BaseButton.vue'
 import BaseEmpty from '../../components/BaseEmpty.vue'
+import BaseSkeleton from '../../components/BaseSkeleton.vue'
 
 const search = ref('')
 const category = ref('')
@@ -52,6 +54,7 @@ const recipes = ref(recipesCache.data.value?.records ?? [])
 const total = ref(recipesCache.data.value?.total ?? 0)
 const page = ref(1)
 const loading = ref(false)
+const initialLoad = ref(true)
 const initialLoadDone = ref(false)
 
 async function fetchRecipes(reset = false) {
@@ -70,7 +73,7 @@ async function fetchRecipes(reset = false) {
       try { localStorage.setItem(recipesCache.cacheKey, JSON.stringify(data)) } catch { /* */ }
     }
   } catch { /* ignore */ }
-  finally { loading.value = false }
+  finally { loading.value = false; initialLoad.value = false }
 }
 
 function loadMore() { fetchRecipes() }

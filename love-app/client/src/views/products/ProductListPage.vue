@@ -20,7 +20,8 @@
       </select>
     </div>
 
-    <div v-if="products.length === 0">
+    <BaseSkeleton v-if="initialLoad && products.length === 0" :count="5" />
+    <div v-else-if="products.length === 0">
       <BaseEmpty text="暂无商品" />
     </div>
 
@@ -55,6 +56,7 @@ import { getProductList } from '../../api/products'
 import { useCache } from '../../composables/useCache'
 import BaseButton from '../../components/BaseButton.vue'
 import BaseEmpty from '../../components/BaseEmpty.vue'
+import BaseSkeleton from '../../components/BaseSkeleton.vue'
 import StatusBadge from '../../components/StatusBadge.vue'
 
 const productsCache = useCache('product_list', () => getProductList())
@@ -64,6 +66,7 @@ const status = ref('')
 const total = ref(productsCache.data.value?.total ?? 0)
 const page = ref(1)
 const loading = ref(false)
+const initialLoad = ref(true)
 
 let searchTimer = null
 function debounceSearch() {
@@ -92,7 +95,7 @@ async function fetchProducts() {
       try { localStorage.setItem(productsCache.cacheKey, JSON.stringify(data)) } catch { /* */ }
     }
   } catch { /* ignore */ }
-  finally { loading.value = false }
+  finally { loading.value = false; initialLoad.value = false }
 }
 
 function loadMore() { fetchProducts() }
