@@ -1,5 +1,6 @@
 <template>
   <AuthLayout title="创建账号">
+    <router-link to="/login" class="back-link">&larr; 返回登录</router-link>
     <form @submit.prevent="handleRegister" class="form">
       <div class="field">
         <input v-model="username" type="text" required class="input" placeholder="用户名（2-20个字符）" autocomplete="username" />
@@ -74,4 +75,13 @@ async function handleRegister() {
 .error { color: var(--color-danger); font-size: 13px; text-align: center; }
 .switch { text-align: center; margin-top: 18px; font-size: 13px; color: var(--color-text-secondary); }
 .switch a { font-weight: 600; }
+.back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.back-link:hover { color: var(--color-primary); }
 </style>
