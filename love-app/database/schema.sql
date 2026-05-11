@@ -64,7 +64,7 @@ CREATE TABLE products (
     description TEXT,
     image_urls JSONB,
     price INTEGER NOT NULL CHECK (price > 0),
-    deadline TIMESTAMP NOT NULL,
+    deadline TIMESTAMP,
     status VARCHAR(20) NOT NULL DEFAULT 'available',
     extended_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT NOW()
