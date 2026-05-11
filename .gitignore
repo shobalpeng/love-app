@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+uploads/*
+!uploads/.gitkeep
+*.log
+.DS_Store
+.claude/
+.plan/
+开发指令文档.md
+开发文档
