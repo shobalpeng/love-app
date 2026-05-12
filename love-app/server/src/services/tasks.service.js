@@ -4,8 +4,8 @@ const integralRecordModel = require('../models/integralRecord.model');
 const notificationService = require('./notifications.service');
 
 const TasksService = {
-  async create({ publisherId, assignedToId, boundPairId, title, description, points, deadline }) {
-    const task = await taskModel.create({ publisherId, assignedToId, boundPairId, title, description, points, deadline });
+  async create({ publisherId, assignedToId, boundPairId, title, description, imageUrls, points, deadline }) {
+    const task = await taskModel.create({ publisherId, assignedToId, boundPairId, title, description, imageUrls, points, deadline });
 
     await notificationService.create({
       userId: assignedToId,

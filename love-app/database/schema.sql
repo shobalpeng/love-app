@@ -36,6 +36,7 @@ CREATE TABLE tasks (
     bound_pair_id INTEGER REFERENCES bindings(id),
     title VARCHAR(200) NOT NULL,
     description TEXT,
+    image_urls JSONB,
     points INTEGER NOT NULL CHECK (points > 0),
     deadline TIMESTAMP,
     status VARCHAR(20) NOT NULL DEFAULT 'pending',

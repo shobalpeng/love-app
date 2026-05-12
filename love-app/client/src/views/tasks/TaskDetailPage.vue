@@ -29,6 +29,9 @@
         </div>
       </div>
       <div v-if="task.description" class="info-desc">{{ task.description }}</div>
+      <div v-if="task.image_urls && task.image_urls.length" class="task-images">
+        <img v-for="(url, i) in task.image_urls" :key="i" :src="url" alt="任务图片" @click="previewImage(url)" />
+      </div>
 
       <div class="timeline" v-if="task.submissions && task.submissions.length > 0">
         <div class="tl-title">&#x1F4C8; 流转记录</div>
@@ -237,6 +240,12 @@ async function handleDelete() {
   border-radius: var(--radius-sm); font-size: 14px; line-height: 1.7;
   border-left: 3px solid var(--color-primary-light);
 }
+.task-images { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.task-images img {
+  width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-sm);
+  cursor: pointer; box-shadow: var(--shadow-sm); transition: transform var(--transition-fast);
+}
+.task-images img:hover { transform: scale(1.05); }
 .role-hint {
   margin-top: 14px; padding: 12px 16px; border-radius: var(--radius-sm);
   background: var(--color-warning-bg); color: #92400e; font-size: 13px; font-weight: 500;

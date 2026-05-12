@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 const Task = {
-  async create({ publisherId, assignedToId, boundPairId, title, description, points, deadline }) {
+  async create({ publisherId, assignedToId, boundPairId, title, description, imageUrls, points, deadline }) {
     const [row] = await db('tasks')
       .insert({
         publisher_id: publisherId,
@@ -9,6 +9,7 @@ const Task = {
         bound_pair_id: boundPairId,
         title,
         description: description || null,
+        image_urls: imageUrls ? JSON.stringify(imageUrls) : null,
         points,
         deadline: deadline || null,
         status: 'pending'

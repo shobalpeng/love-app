@@ -2,7 +2,7 @@ const tasksService = require('../services/tasks.service');
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, description, points, deadline } = req.body;
+    const { title, description, imageUrls, points, deadline } = req.body;
     if (!title || !points) {
       return res.status(400).json({ error: '标题和积分奖励为必填项' });
     }
@@ -15,6 +15,7 @@ exports.create = async (req, res, next) => {
       boundPairId: req.binding.id,
       title,
       description,
+      imageUrls,
       points,
       deadline
     });
